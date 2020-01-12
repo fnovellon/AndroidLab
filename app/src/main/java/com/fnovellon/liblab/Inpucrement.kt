@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 
-class IncrementalButton : LinearLayout {
+class Inpucrement : LinearLayout {
 
     var counter: Int = 0
         set(value) {
@@ -25,14 +25,13 @@ class IncrementalButton : LinearLayout {
     private val btAdd: Button
 
     constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         initializeAttributes(attrs)
     }
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         initializeAttributes(attrs)
     }
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(
         context,
         attrs,
         defStyleAttr,
@@ -42,7 +41,7 @@ class IncrementalButton : LinearLayout {
     }
 
     init {
-        inflate(context, R.layout.custom_incremental_button, this)
+        inflate(context, R.layout.inpucrement_layout, this)
 
         tvCount = findViewById(R.id.tv_count)
         btSub = findViewById(R.id.bt_sub)
@@ -77,21 +76,23 @@ class IncrementalButton : LinearLayout {
         )
     }
 
-    private fun initializeAttributes(attrs: AttributeSet) {
-        val attributes = context.obtainStyledAttributes(attrs, R.styleable.IncrementalButton)
+    private fun initializeAttributes(attrs: AttributeSet?) {
+        attrs ?: return
 
-        maxCount = attributes.getInt(R.styleable.IncrementalButton_maxCount, Int.MAX_VALUE)
-        minCount = attributes.getInt(R.styleable.IncrementalButton_minCount, Int.MIN_VALUE)
 
-        if (minCount > maxCount) {
-            throw IllegalArgumentException("minCount > maxCount : $minCount > $maxCount")
+        val attributes = context.obtainStyledAttributes(attrs, R.styleable.Inpucrement)
+        with(attributes) {
+            maxCount = getInt(R.styleable.Inpucrement_maxCount, Int.MAX_VALUE)
+            minCount = getInt(R.styleable.Inpucrement_minCount, Int.MIN_VALUE)
+
+            if (minCount > maxCount) {
+                throw IllegalArgumentException("minCount > maxCount : $minCount > $maxCount")
+            }
+
+            stepCount = getInt(R.styleable.Inpucrement_stepCount, 1)
+            initCount = getInt(R.styleable.Inpucrement_initCount, 0)
         }
-
-        stepCount = attributes.getInt(R.styleable.IncrementalButton_stepCount, 1)
-        initCount = attributes.getInt(R.styleable.IncrementalButton_initCount, 0)
-
     }
-
 
 
 }

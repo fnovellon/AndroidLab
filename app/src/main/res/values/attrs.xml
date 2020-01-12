@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="IncrementalButton">
+    <declare-styleable name="Inpucrement">
         <attr name="maxCount" format="integer"/>
         <attr name="minCount" format="integer"/>
         <attr name="stepCount" format="integer"/>
